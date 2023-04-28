@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Flask
+from flask import Flask,render_template
 from flask_debugtoolbar import DebugToolbarExtension
 
 from models import connect_db
@@ -22,3 +22,12 @@ connect_db(app)
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 toolbar = DebugToolbarExtension(app)
+
+@app.get("/")
+def homepage():
+    """show homepage links"""
+
+
+    return render_template("index.html")
+
+@app.route('/add',methods=['GET','POST'])
