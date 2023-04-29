@@ -8,10 +8,11 @@
     <div>
       <img src="{{pet.photo_url}}">
 
-      <h3 name="name">{{pet.name}} </h3>
+      <a href="/{{pet.id}}"><h3 name="name">{{pet.name}} </h3></a>
 
       {%if pet.available%}
       <h3>is Available</h3>
+
       {%endif%}
     </div>
     {% endfor %}

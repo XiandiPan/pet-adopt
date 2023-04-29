@@ -45,8 +45,18 @@ def add_pet():
         age = form.age.data
         notes = form.notes.data
 
+        pet = Pet(
+            name=name,
+            species=species,
+            photo_url=photo_url,
+            age=age,
+            notes=notes)
+
+        db.session.add(pet)
+        db.session.commit()
+
         flash(f"Added {name}")
-        return redirect("/add")
+        return redirect("/")
 
     else:
         return render_template("pet_add_form.html", form=form)
@@ -55,17 +65,23 @@ def add_pet():
 def edit_show_pet(pet_id_number):
     """edit and show pet information """
 
-    pet = Pet.query.get(pet_id_number)
-    form = EditPetForm()
+    pet = Pet.query.get_or_404(pet_id_number) #TODO: always use _or_404!
+    form = EditPetForm(obj=pet)
 
     if form.validate_on_submit():
         pet.photo_url = form.photo_url.data
         pet.notes = form.notes.data
         pet.available = form.available.data
 
+        pet.photo_url=pet.photo_url
+        pet.notes=pet.notes
+        pet.available=pet.available
+
+        db.session.commit()
+
         flash(f"Edited {pet.photo_url} {pet.notes} {pet.available}")
-        return redirect("/<int:pet_id_number>")
+        return redirect("/")
 
     else:
-        return render_template("pet_edit_form.html", form=form)
+        return render_template("pet_info.html", form=form, pet=pet)
 

@@ -1,4 +1,5 @@
 """Models for adopt app."""
+DEFAULT_IMAGE = "https://www.fortbendcountytx.gov/sites/default/files/media/2021-11/636776284196770000.jpg"
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -36,7 +37,7 @@ class Pet(db.Model):
     photo_url = db.Column(
         db.Text,
         nullable=False,
-        default=""
+        default=DEFAULT_IMAGE
     )
     age = db.Column(
         db.Text,
