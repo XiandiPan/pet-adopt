@@ -4,7 +4,7 @@
 
 
     <h1>Pets</h1>
-  {% for pet in pets%}
+  {% for pet in pets %}
     <div>
       <img src="{{pet.photo_url}}">
 
@@ -14,8 +14,9 @@
       <h3>is Available</h3>
       {%endif%}
     </div>
-    {%endfor%}
+    {% endfor %}
 
+    <a href="/add"><button>Add a Pet</button></a>
 
 
 

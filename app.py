@@ -28,9 +28,9 @@ toolbar = DebugToolbarExtension(app)
 @app.get("/")
 def homepage():
     """show homepage links"""
+    pets = Pet.query.all()
 
-
-    return render_template("index.html")
+    return render_template("index.html", pets=pets)
 
 @app.route('/add',methods=['GET','POST'])
 def add_pet():
@@ -52,13 +52,20 @@ def add_pet():
         return render_template("pet_add_form.html", form=form)
 
 @app.route('/<int:pet_id_number>',methods=['GET','POST'])
-def edit_show_pet():
+def edit_show_pet(pet_id_number):
     """edit and show pet information """
 
+    pet = Pet.query.get(pet_id_number)
     form = EditPetForm()
 
     if form.validate_on_submit():
-        photo_url = form.photo_url.data
-        notes = form.notes.data
-        available = form.available.data
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+
+        flash(f"Edited {pet.photo_url} {pet.notes} {pet.available}")
+        return redirect("/<int:pet_id_number>")
+
+    else:
+        return render_template("pet_edit_form.html", form=form)
 
